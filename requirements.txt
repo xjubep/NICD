@@ -1,0 +1,17 @@
+scikit-learn
+pandas
+numpy
+tqdm
+timm
+wandb
+h5py
+pytorch-metric-learning
+augly
+pillow
+faiss-gpu
+matplotlib
+albumentations
+opencv-python-headless
+ptflops
+torch_optimizer
+seaborn

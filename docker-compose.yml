@@ -1,0 +1,51 @@
+version: '2.3'
+
+services:
+  main:
+    container_name: NICD
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    runtime: nvidia
+    restart: always
+    volumes:
+      - type: volume
+        source: nfs_shared_
+        target: /mldisk/nfs_shared_
+        volume:
+          nocopy: true
+      - type: volume
+        source: nfs_shared
+        target: /mlsun/nfs_shared
+        volume:
+          nocopy: true
+      - type: volume
+        source: nfs_shared2
+        target: /mldisk2/nfs_shared
+        volume:
+          nocopy: true
+      - "/media/mmlab/hdd:/hdd"
+    ports:
+      - "35070:22"
+      - "35071:6006"
+      - "35072:35072"
+    ipc: host
+    stdin_open: true
+    tty: true
+
+volumes:
+  nfs_shared:
+    driver_opts:
+      type: "nfs"
+      o: "addr=mlsun.sogang.ac.kr,nolock,soft,rw"
+      device: ":/volume1/nfs_shared"
+  nfs_shared_:
+    driver_opts:
+      type: "nfs"
+      o: "addr=mldisk.sogang.ac.kr,nolock,soft,rw"
+      device: ":/volume3/nfs_shared_"
+  nfs_shared2:
+    driver_opts:
+      type: "nfs"
+      o: "addr=mldisk.sogang.ac.kr,nolock,soft,rw"
+      device: ":/volume2/nfs_shared"
